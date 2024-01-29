@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { imageBasePath } from "../../contants";
-import './moviemodal.css'
+import './Moviemodal.css'
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 function Moviemodal({
   backdrop_path,
