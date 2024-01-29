@@ -11,9 +11,13 @@ import {
 import styled from "styled-components";
 import app from "../firebase";
 
+const initialUserData = localStorage.getItem("userData")
+  ? JSON.parse(localStorage.getItem("userData"))
+  : {};
+
 const Nav = () => {
   const [show, setShow] = useState("false");
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(initialUserData);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -54,7 +58,9 @@ const Nav = () => {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
+        console.log(result);
         setUserData(result.user);
+        localStorage.setItem("userData", JSON.stringify(result.user));
       })
       .catch((error) => {
         alert(error.message);
@@ -65,7 +71,8 @@ const Nav = () => {
     signOut(auth)
       .then(() => {
         setUserData({});
-        navigate('/')
+        localStorage.removeItem('userData')
+        navigate("/");
       })
       .catch((error) => {
         alert(error.message);
